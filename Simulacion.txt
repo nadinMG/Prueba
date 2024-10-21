@@ -1,0 +1,278 @@
+POKEMON
+import random
+
+class Pokemon:
+    def __init__(self, nombre, tipo, debilidad):
+        self.nombre = nombre  # Público, es accesible desde afuera
+        self.tipo = tipo      # Público
+        self._vida = 100      # Protegido, no debería modificarse desde afuera
+        self._ataque = random.randint(0, 100)   # Protegido
+        self._defensa = random.randint(0, 100)  # Protegido
+        self._velocidad = random.randint(0, 100) # Protegido
+        self._salvajismo = random.randint(0, 100) # Protegido
+        self.debilidad = debilidad  # Público
+
+    # Getters y setters para vida (si deseas controlar accesos externos)
+    def get_vida(self):
+        return self._vida
+
+    def set_vida(self, valor):
+        if valor < 0:
+            self._vida = 0
+        else:
+            self._vida = valor
+	print(f"La vida de {self.nombre} ahora es {self._vida}.")
+
+    def mostrar_datos(self):
+        print(f"Nombre: {self.nombre}")
+        print(f"Tipo: {self.tipo}")
+        print(f"Ataque: {self._ataque}")
+        print(f"Defensa: {self._defensa}")
+        print(f"Velocidad: {self._velocidad}")
+        print(f"Salvajismo: {self._salvajismo}")
+
+    def ataque_critico(self, oponente):
+        if oponente.tipo == self.debilidad:
+            if random.random() < 0.7:
+                ataque_critico = self._ataque * 1.5
+                print(f"Ataque crítico realizado contra {oponente.nombre}!")
+		oponente.set_vida(oponente._vida - ataque_critico)  # Usamos set_vida para controlar la vida
+                return ataque_critico
+        return self._ataque
+	    else:
+            	print(f"{self.nombre} intentó hacer un ataque crítico, pero falló.")
+        else:
+        	print(f"{oponente.nombre} no es débil a este tipo de ataque.")
+    # Ataque normal si no hay ataque crítico
+    oponente.set_vida(oponente._vida - self._ataque)  # Usamos set_vida para controlar la vida
+    return self._ataque
+
+    def defender(self, danio):
+        if self._velocidad > 50:
+            if random.random() < 0.5:
+                print(f"{self.nombre} ha evadido el ataque!")
+                return 0
+	    else:
+		print(f"{self.nombre} intentó evadir, pero falló!")
+	else:
+		print(f"{self.nombre} no tiene suficiente velocidad para evadir.")
+
+        danio_recibido = max(danio - self._defensa, 0)
+        self.set_vida(self._vida - danio_recibido)
+	print(f"{self.nombre} recibió {danio_recibido} de daño.")
+        return danio_recibido
+
+------------
+import random
+
+class Pokemon:
+    def __init__(self, nombre, tipo, debilidad):
+        self._nombre = nombre
+        self._tipo = tipo
+        self._vida = 100
+        self._ataque = random.randint(0, 100)
+        self._defensa = random.randint(0, 100)
+        self._velocidad = random.randint(0, 100)
+        self._salvajismo = random.randint(0, 100)
+        self._debilidad = debilidad
+
+    # Métodos Getters
+    def get_nombre(self):
+        return self.__nombre
+
+    def get_tipo(self):
+        return self.__tipo
+
+    def get_vida(self):
+        return self.__vida
+
+    def get_salvajismo(self):
+        return self.__salvajismo
+
+    def get_debilidad(self):
+        return self.__debilidad
+
+    # Mostrar datos del Pokémon
+    def mostrar_datos(self):
+        print(f"Nombre: {self.__nombre}, Tipo: {self.__tipo}, Vida: {self.__vida}, "
+              f"Ataque: {self.__ataque}, Defensa: {self.__defensa}, Velocidad: {self.__velocidad}, "
+              f"Salvajismo: {self.__salvajismo}")
+
+    # Método para modificar la vida del Pokémon y evitar que sea menor a 0
+    def set_vida(self, valor):
+        if valor < 0:
+            self.__vida = 0
+        else:
+            self.__vida = valor
+        print(f"La vida de {self.__nombre} ahora es {self.__vida}.")
+
+    # Métodos de ataque y defensa
+    def ataque_critico(self, oponente):
+        if oponente.get_tipo() == self.__debilidad:
+            if random.random() < 0.7:  # 70% de probabilidad de crítico
+                ataque_critico = self.__ataque * 1.5
+                print(f"Ataque crítico realizado contra {oponente.get_nombre()}!")
+                oponente.set_vida(oponente.get_vida() - ataque_critico)
+                return ataque_critico
+        print(f"{oponente.get_nombre()} no es débil a este tipo de ataque.")
+        oponente.set_vida(oponente.get_vida() - self.__ataque)
+        return self.__ataque
+
+    def defender(self, danio):
+        if self.__velocidad > 50:
+            if random.random() < 0.5:
+                print(f"{self.__nombre} ha evadido el ataque!")
+                return 0  # Evita el ataque
+        danio_recibido = max(danio - self.__defensa, 0)
+        self.set_vida(self.__vida - danio_recibido)
+        print(f"{self.__nombre} recibió {danio_recibido} de daño.")
+        return danio_recibido
+
+
+HIERBA
+from pokemon import Pokemon
+
+class PokemonHierba(Pokemon):
+    def __init__(self, nombre):
+        super().__init__(nombre, "Hierba", "Fuego")
+
+
+FUEGO
+from pokemon import Pokemon
+
+class PokemonFuego(Pokemon):
+    def __init__(self, nombre):
+        super().__init__(nombre, "Fuego", "Agua")
+
+AGUA
+from pokemon import Pokemon
+
+class PokemonAgua(Pokemon):
+    def __init__(self, nombre):
+        super().__init__(nombre, "Agua", "Hierba")
+
+    def ataque_critico(self, oponente):
+        if oponente.tipo == self.debilidad:
+            ataque_critico = self._ataque * 1.7
+            print(f"Ataque crítico de Agua realizado contra {oponente.nombre}!")
+            return ataque_critico
+        return self._ataque
+
+    def defender(self, danio):
+        if random.random() < 0.3:
+            print(f"{self.nombre} ha reducido el daño a la mitad!")
+            danio = danio / 2
+        danio_recibido = max(danio - self._defensa, 0)
+        self.set_vida(self._vida - danio_recibido)
+        return danio_recibido
+
+ENTRENADOR
+import random
+
+class Entrenador:
+    def __init__(self, nombre):
+        self.__nombre = nombre
+        self.__nivel = random.randint(1, 100)
+        self.__pokedex = []
+        self.__pokemon_principal = None
+
+    def asignar_pokemon_principal(self, pokemon):
+        self.pokemon_principal = pokemon
+
+    def atrapar_pokemon(self, pokemon):
+        print(f"Intentando atrapar a {pokemon.nombre}...")
+        for _ in range(3):  # Puede hacer 3 ataques para reducir el salvajismo
+            ataque = self.pokemon_principal.ataque_critico(pokemon)
+            print(f"Ataque realizado con fuerza {ataque}.")
+            pokemon._salvajismo -= pokemon._salvajismo * 0.1
+            pokemon.set_vida(pokemon.get_vida() - ataque)
+            print(f"{pokemon.nombre} tiene {pokemon.get_vida()} de vida y {pokemon._salvajismo} de salvajismo.")
+            if pokemon.get_vida() <= 0:
+                print(f"{pokemon.nombre} ha sido debilitado. No puede ser atrapado.")
+                return False
+            if self.nivel > pokemon._salvajismo:
+                print(f"¡{pokemon.nombre} ha sido atrapado!")
+                self.pokedex.append(pokemon)
+                return True
+        print(f"No fue posible atrapar a {pokemon.nombre}.")
+        return False
+
+-----
+import random
+
+class Entrenador:
+    def __init__(self, nombre):
+        self.__nombre = nombre
+        self.__nivel = random.randint(1, 100)
+        self.__pokedex = []
+        self.__pokemon_principal = None
+
+    # Getters
+    def get_nombre(self):
+        return self.__nombre
+
+    def get_nivel(self):
+        return self.__nivel
+
+    def get_pokedex(self):
+        return self.__pokedex
+
+    def get_pokemon_principal(self):
+        return self.__pokemon_principal
+
+    # Método para capturar Pokémon
+    def capturar_pokemon(self, pokemon):
+        if self.__nivel > pokemon.get_salvajismo():
+            self.__pokedex.append(pokemon)
+            print(f"{pokemon.get_nombre()} ha sido capturado!")
+            if self.__pokemon_principal is None:
+                self.__pokemon_principal = pokemon
+                print(f"{pokemon.get_nombre()} es ahora el Pokémon principal.")
+        else:
+            print(f"{pokemon.get_nombre()} es demasiado salvaje para ser capturado por {self.__nombre}.")
+
+    # Mostrar datos del entrenador y su pokédex
+    def mostrar_datos(self):
+        print(f"Entrenador: {self.__nombre}, Nivel: {self.__nivel}")
+        print("Pokédex:")
+        for pokemon in self.__pokedex:
+            pokemon.mostrar_datos()
+
+
+MAIN
+from pokemon_hierba import PokemonHierba
+from pokemon_fuego import PokemonFuego
+from pokemon_agua import PokemonAgua
+from entrenador import Entrenador
+import random
+
+def crear_pokemon_aleatorio():
+    tipos = [PokemonHierba, PokemonFuego, PokemonAgua]
+    nombre = f"Pokemon{random.randint(1, 1000)}"
+    return random.choice(tipos)(nombre)
+
+def simulacion():
+    # Crear entrenador
+    nombre_entrenador = input("Ingrese el nombre del entrenador: ")
+    entrenador = Entrenador(nombre_entrenador)
+
+    # Crear Pokémon principal del entrenador
+    pokemon_principal = crear_pokemon_aleatorio()
+    entrenador.asignar_pokemon_principal(pokemon_principal)
+    print(f"El Pokémon principal de {entrenador.nombre} es {pokemon_principal.nombre} ({pokemon_principal.tipo}).")
+    
+    # Crear 10 Pokémon aleatorios para que el entrenador intente atraparlos
+    pokemones_para_atrapar = [crear_pokemon_aleatorio() for _ in range(10)]
+    
+    # Intentos de captura
+    for pokemon in pokemones_para_atrapar:
+        pokemon.mostrar_datos()
+        entrenador.atrapar_pokemon(pokemon)
+
+    # Mostrar los resultados de la simulación
+    print("\n--- Resultados Finales ---")
+    print(f"Entrenador: {entrenador.nombre}")
+    print(f"Nivel: {entrenador.nivel}")
+    print("Pokémon atrapados en la Pokédex:")
+    for p in entrenador.pokedex:
+        print(f"- {p.nombre} ({p.tipo})")
