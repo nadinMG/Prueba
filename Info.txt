@@ -1,0 +1,71 @@
+SIMULACION POKEMON
+3 Tipos = Clases
+
+--Class Hierba--
+Atributo (Rango 0-100)
+nombre
+tipo (Hierba)
+vida (siempre 100)
+ataque (aleatorio)
+defensa (aleatorio)
+velocidad (aleatorio)
+debilidad (tipoFuego)
+salvajismo (aleatorio)
+
+Nuevo --> Ingresar Nombre
+
+Metodo Imprimir Datos: nombre, ataque,defensa,velocidad y salvajismo
+Metodo Ataque: Oponente Debil a tipo Hierba (Agua) [RECIBIR ESE POKEMON]
+ +70% -> 0.70  Ataque critito = Aumenta ataque normal +50%
+Metodo Defensa: Si atacado --> Velocidad > 50 = +50% Evadir / Si Velocidad <= 50 = Ataque completo [RECIBE EL DAÑO]
+
+--Class Fuego--
+Atributo (Rango 0-100)
+nombre
+tipo (FUEGO)
+vida (siempre 100)
+ataque (aleatorio)
+defensa (aleatorio)
+velocidad (aleatorio)
+debilidad (tipoAgua)
+salvajismo (aleatorio)
+
+Nuevo --> Ingresar Nombre
+
+Metodo Imprimir Datos: nombre, ataque,defensa,velocidad y salvajismo
+Metodo Ataque: Oponente debil a tipo Fuego (Hierba)  [RECIBIR ESE POKEMON]
++70% -> 0.70 Ataque critico = Aumenta ataque normal +50%
+Metodo Defensa: Defenderse de cualquier tipo, recibira ataque completo. Para defense, reduce el daño
+
+--Class AGUA--
+Atributo (Rango 0-100)
+nombre
+tipo (Hierba)
+vida (siempre 100)
+ataque (aleatorio)
+defensa (aleatorio)
+velocidad (aleatorio)
+debilidad (tipoHierba)
+salvajismo (aleatorio)
+
+Nuevo --> Ingresar Nombre
+Metodo Imprimir Datos: nombre, ataque,defensa,velocidad y salvajismo
+Metodo Ataque: Oponente debil a tipo Agua (Fuego), Siempre Ataque critico aumenta Ataque +70% 
+[RECIBIR ESE POKEMON y enviar Daño/Tipo]
+Metodo Defensa: +30% reducir daño al -50% [Recibir Daño] 
+
+--Class Entrenador--
+nombre
+nivel entrenador (Aleatorio 1..100) y Pokemon Principal
+(Coleccion En Pokedex)
+
+Metodo Atrapar Pokemon: [nivel entrenador > salvajismo]
+3 Ataques --> Disminuir Salvajismo c/10%
+Si Pierde toda Vida, no atrapado. Comprobas c/ataque si posible capturar hasta Condicion[*]
+
+Si logra +Pokemon en POKEDEX
+
+SIMULACION (Main)
+- 10 Pokemon Aleatoria para entrenador quiera atrapar
+- Finalizar 3 intentos --> Datos E Nombre/Nivel y Lista Pokemon atrapados Pokedex
+
